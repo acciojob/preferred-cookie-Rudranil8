@@ -26,8 +26,8 @@ let fontColor = document.querySelector('#fontcolor');
 
 form.addEventListener('submit', function(event) {
   event.preventDefault();
-  document.cookie = 'fontSize=' + fontSize.value + '; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/';
-  document.cookie = 'fontColor=' + fontColor.value + '; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/';
+  document.cookie = 'fontSize=' + fontSize.value + '; expires=Fri, 31 Dec 9999 23:59:59 GMT';
+  document.cookie = 'fontColor=' + fontColor.value + '; expires=Fri, 31 Dec 9999 23:59:59 GMT';
   applyPreferences();
 });
 
