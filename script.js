@@ -31,14 +31,24 @@ form.addEventListener('submit', function(event) {
   applyPreferences();
 });
 
+// function applyPreferences() {
+//   let cookies = document.cookie.split('; ');
+//   for (let i = 0; i < cookies.length; i++) {
+//     let cookie = cookies[i].split('=');
+//     if (cookie[0] === 'fontSize') {
+//       document.documentElement.style.setProperty('--fontsize', cookie[1] + 'px');
+//     } else if (cookie[0] === 'fontColor') {
+//       document.documentElement.style.setProperty('--fontcolor', cookie[1]);
+//     }
+//   }
+// }
 function applyPreferences() {
-  let cookies = document.cookie.split('; ');
-  for (let i = 0; i < cookies.length; i++) {
-    let cookie = cookies[i].split('=');
-    if (cookie[0] === 'fontSize') {
-      document.documentElement.style.setProperty('--fontsize', cookie[1] + 'px');
-    } else if (cookie[0] === 'fontColor') {
-      document.documentElement.style.setProperty('--fontcolor', cookie[1]);
+  for (let c of document.cookie.split('; ')) {
+    let [key, val] = c.split('=');
+    if (key === 'fontSize') {
+      document.documentElement.style.setProperty('--fontsize', val + 'px');
+    } else if (key === 'fontColor') {
+      document.documentElement.style.setProperty('--fontcolor', val);
     }
   }
 }
