@@ -30,27 +30,34 @@ form.addEventListener('submit', function(event) {
   document.cookie = 'fontColor=' + fontColor.value + '; expires=Fri, 31 Dec 9999 23:59:59 GMT';
   applyPreferences();
 });
-
 // function applyPreferences() {
-//   let cookies = document.cookie.split('; ');
-//   for (let i = 0; i < cookies.length; i++) {
-//     let cookie = cookies[i].split('=');
-//     if (cookie[0] === 'fontSize') {
-//       document.documentElement.style.setProperty('--fontsize', cookie[1] + 'px');
-//     } else if (cookie[0] === 'fontColor') {
-//       document.documentElement.style.setProperty('--fontcolor', cookie[1]);
+//   for (let c of document.cookie.split('; ')) {
+//     let [key, val] = c.split('=');
+//     if (key === 'fontSize') {
+//       document.documentElement.style.setProperty('--fontsize', val + 'px');
+//     } else if (key === 'fontColor') {
+//       document.documentElement.style.setProperty('--fontcolor', val);
 //     }
 //   }
 // }
 function applyPreferences() {
-  for (let c of document.cookie.split('; ')) {
-    let [key, val] = c.split('=');
-    if (key === 'fontSize') {
-      document.documentElement.style.setProperty('--fontsize', val + 'px');
-    } else if (key === 'fontColor') {
-      document.documentElement.style.setProperty('--fontcolor', val);
+  return new Promise(resolve => {
+    for (let c of document.cookie.split('; ')) {
+      let [key, val] = c.split('=');
+      if (key === 'fontSize') {
+        document.documentElement.style.setProperty('--fontsize', val + 'px');
+      } else if (key === 'fontColor') {
+        document.documentElement.style.setProperty('--fontcolor', val);
+      }
     }
-  }
+    resolve();
+  });
 }
 
-window.onload = applyPreferences;
+window.onload = () => applyPreferences();
+
+// window.onload = applyPreferences;
+cy.window().then(win => win.applyPreferences()).then(() => {
+  cy.get("body").should("have.css", "font-size", "18px");
+  cy.get("body").should("have.css", "color", "rgb(255, 0, 0)");
+});
